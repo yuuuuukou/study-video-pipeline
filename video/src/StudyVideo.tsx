@@ -126,10 +126,14 @@ export const StudyVideo: React.FC<StudyVideoProps> = ({ sections }) => {
   const S: Sizes = isVertical ? SIZES_VERTICAL : SIZES_HORIZONTAL;
 
   // 現在のセクションを特定
-  const currentSection = sections.findLast((s) => frame >= s.startFrame) ?? sections[0];
+  const currentSection =
+    sections.find((s) => frame >= s.startFrame && frame < s.startFrame + s.durationInFrames) ??
+    sections[0];
   // 現在のセリフを特定
   const allLines = sections.flatMap((s) => s.lines);
-  const currentLine = allLines.findLast((l) => frame >= l.startFrame) ?? null;
+  const currentLine =
+    allLines.find((l) => frame >= l.startFrame && frame < l.startFrame + l.durationInFrames) ??
+    null;
 
   // layout を正規化してキャラ表示可否と字幕余白を決定
   const normalizedLayout: SlideLayout = currentSection.layout ?? "bullets";

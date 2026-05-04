@@ -18,14 +18,23 @@ examples/sample.json
 
 ## Requirements
 
-- Node.js
-- npm
-- VOICEVOX
+Verified environment:
+
+- Node.js v24.14.1
+- npm 11.11.0
+- Remotion 4.0.454
+- VOICEVOX 0.25.1
 
 VOICEVOXはGUIアプリを起動し、ローカルAPI `http://localhost:50021` が使える状態にしてください。
 
 ```powershell
 Invoke-RestMethod "http://localhost:50021/version"
+```
+
+別のVOICEVOX互換APIに向けたい場合は、`VOICEVOX_URL` で上書きできます。
+
+```powershell
+$env:VOICEVOX_URL = "http://localhost:50021"
 ```
 
 ## Setup
@@ -59,6 +68,19 @@ node scripts/render.js examples/sample.json
 output/videos/sample.mp4
 ```
 
+## Troubleshooting
+
+### Regenerate From A Clean State
+
+生成済みファイルが古い、音声と動画がずれる、または設定変更が反映されない場合は、生成物を削除してから再実行してください。
+
+```powershell
+Remove-Item -Recurse -Force output, video/public/audio, examples/*.props.json -ErrorAction SilentlyContinue
+node scripts/render.js examples/sample.json
+```
+
+`video/public/audio/` と `examples/*.props.json` はレンダリング時に再生成されます。
+
 ## Files
 
 ```text
@@ -70,11 +92,14 @@ output/              Generated files; ignored by git
 
 ## License
 
-The source code in this repository is licensed under the MIT License.
+Only the original source code authored for this repository is licensed under
+the MIT License. The MIT License does not apply to generated files or
+third-party software, assets, voice libraries, voices, or videos.
 
 This does not grant rights to third-party software, VOICEVOX voice libraries,
 generated voices, generated videos, or official character assets. See
-`THIRD_PARTY_NOTICES.md` before publishing or monetizing generated content.
+`NOTICE.md` and `THIRD_PARTY_NOTICES.md` before publishing or monetizing
+generated content.
 
 ## Credits And Generated Content
 
@@ -95,5 +120,7 @@ library's terms, including required credit notation.
 
 - `output/` and `video/public/audio/` are generated and ignored.
 - `examples/*.props.json` is generated and ignored.
+- Studio startup may use dummy default props for preview/bootstrap purposes;
+  render from a script JSON to generate actual props.
 - This project uses Remotion as a third-party dependency. Remotion is licensed
   separately under the Remotion License.

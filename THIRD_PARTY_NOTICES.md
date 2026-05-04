@@ -1,6 +1,9 @@
 # Third-Party Notices
 
-This repository's own source code is licensed under the MIT License.
+This file explains the license scope and third-party notices referenced by
+`NOTICE.md`.
+
+This repository's own original source code is licensed under the MIT License.
 
 That license does not grant rights to third-party software, VOICEVOX voice
 libraries, generated voices, generated videos, or official character assets.

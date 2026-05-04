@@ -11,7 +11,6 @@
 
 import fs from "fs";
 import path from "path";
-import https from "https";
 import http from "http";
 import { fileURLToPath } from "url";
 
@@ -19,7 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SPEAKER_CONFIG_PATH = path.join(__dirname, "..", "video", "src", "speaker-config.json");
 
 // --- 設定（ここを変えるだけで話者が変わる）---
-const VOICEVOX_URL = "http://localhost:50021";
+const VOICEVOX_URL = process.env.VOICEVOX_URL ?? "http://localhost:50021";
 const SPEAKER_CONFIG = JSON.parse(fs.readFileSync(SPEAKER_CONFIG_PATH, "utf-8"));
 const SPEAKERS = Object.fromEntries(
   Object.entries(SPEAKER_CONFIG).map(([speakerKey, cfg]) => [speakerKey, cfg.voicevoxId])
@@ -33,6 +32,7 @@ if (!scriptPath || !outputDir) {
 }
 
 const script = JSON.parse(fs.readFileSync(scriptPath, "utf-8"));
+validateScript(script);
 fs.mkdirSync(outputDir, { recursive: true });
 
 console.log(`📖 台本: ${script.title}`);
@@ -45,9 +45,7 @@ for (const [sectionIndex, section] of script.sections.entries()) {
   for (const line of section.lines) {
     const speakerId = SPEAKERS[line.speaker];
     if (speakerId === undefined) {
-      console.warn(`  ⚠️  未知のspeaker: ${line.speaker} スキップ`);
-      lineIndex++;
-      continue;
+      throw new Error(`未知のspeakerです: ${line.speaker}. video/src/speaker-config.json を確認してください。`);
     }
 
     const filename = `${String(lineIndex).padStart(4, "0")}_${line.speaker}.wav`;
@@ -61,6 +59,7 @@ for (const [sectionIndex, section] of script.sections.entries()) {
       console.log(` ✅`);
     } catch (e) {
       console.log(` ❌ ${e.message}`);
+      throw e;
     }
 
     lineIndex++;
@@ -105,6 +104,10 @@ function postJson(url, body) {
       let buf = "";
       res.on("data", (chunk) => (buf += chunk));
       res.on("end", () => {
+        if (!isSuccessStatus(res.statusCode)) {
+          reject(new Error(`VOICEVOX API error ${res.statusCode}: ${buf.slice(0, 200)}`));
+          return;
+        }
         try { resolve(JSON.parse(buf)); }
         catch (e) { reject(new Error(`JSON parse error: ${buf.slice(0, 100)}`)); }
       });
@@ -132,10 +135,45 @@ function postJsonBinary(url, body) {
     const req = http.request(options, (res) => {
       const chunks = [];
       res.on("data", (chunk) => chunks.push(chunk));
-      res.on("end", () => resolve(Buffer.concat(chunks)));
+      res.on("end", () => {
+        const body = Buffer.concat(chunks);
+        if (!isSuccessStatus(res.statusCode)) {
+          reject(new Error(`VOICEVOX API error ${res.statusCode}: ${body.toString("utf-8").slice(0, 200)}`));
+          return;
+        }
+        resolve(body);
+      });
     });
     req.on("error", reject);
     req.write(data);
     req.end();
   });
+}
+
+function isSuccessStatus(statusCode) {
+  return statusCode !== undefined && statusCode >= 200 && statusCode < 300;
+}
+
+function validateScript(script) {
+  if (!script || !Array.isArray(script.sections)) {
+    throw new Error("台本JSONには sections 配列が必要です。");
+  }
+
+  for (const [sectionIndex, section] of script.sections.entries()) {
+    if (!Array.isArray(section.lines)) {
+      throw new Error(`sections[${sectionIndex}].lines は配列にしてください。`);
+    }
+
+    for (const [lineIndex, line] of section.lines.entries()) {
+      if (!line.speaker) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].speaker がありません。`);
+      }
+      if (!line.text) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].text がありません。`);
+      }
+      if (SPEAKERS[line.speaker] === undefined) {
+        throw new Error(`未知のspeakerです: ${line.speaker}. video/src/speaker-config.json を確認してください。`);
+      }
+    }
+  }
 }
