@@ -68,9 +68,32 @@ examples/sample.json Minimal script JSON
 output/              Generated files; ignored by git
 ```
 
+## License
+
+The source code in this repository is licensed under the MIT License.
+
+This does not grant rights to third-party software, VOICEVOX voice libraries,
+generated voices, generated videos, or official character assets. See
+`THIRD_PARTY_NOTICES.md` before publishing or monetizing generated content.
+
+## Credits And Generated Content
+
+This repository does not include VOICEVOX, VOICEVOX ENGINE, VOICEVOX CORE,
+VOICEVOX voice libraries, generated WAV files, generated MP4 files, or official
+character assets.
+
+The sample uses abstract placeholder SVGs for speakers. If you use official
+character materials such as standing images or Live2D models, follow the terms
+for those materials. Do not redistribute official character assets, generated
+voice files, or generated videos as reusable materials, and do not claim them as
+your own work.
+
+If you publish generated videos, follow the VOICEVOX terms and each voice
+library's terms, including required credit notation.
+
 ## Notes
 
 - `output/` and `video/public/audio/` are generated and ignored.
 - `examples/*.props.json` is generated and ignored.
-- If you use VOICEVOX audio publicly, check the VOICEVOX terms and each voice library's terms.
-- License has not been selected yet. Choose a license before publishing this repository.
+- This project uses Remotion as a third-party dependency. Remotion is licensed
+  separately under the Remotion License.
