@@ -16,7 +16,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-const VIDEO_DIR = path.join(ROOT, "video");
+const REMOTION_DIR = path.join(ROOT, "remotion");
 
 const [, , scriptPath] = process.argv;
 if (!scriptPath) {
@@ -45,11 +45,11 @@ run(`node scripts/make-props.js "${absScriptPath}" "${audioDir}"`, ROOT);
 
 // ---- Step 3: Remotionレンダリング ----
 console.log("\n🎬  Step 3: 動画レンダリング...");
-const relativeProps = path.relative(VIDEO_DIR, propsPath).replace(/\\/g, "/");
-const relativeOutput = path.relative(VIDEO_DIR, outputVideo).replace(/\\/g, "/");
+const relativeProps = path.relative(REMOTION_DIR, propsPath).replace(/\\/g, "/");
+const relativeOutput = path.relative(REMOTION_DIR, outputVideo).replace(/\\/g, "/");
 run(
   `npx remotion render StudyVideo "${relativeOutput}" --props="${relativeProps}"`,
-  VIDEO_DIR
+  REMOTION_DIR
 );
 
 console.log(`\n✅ 完成: ${outputVideo}`);

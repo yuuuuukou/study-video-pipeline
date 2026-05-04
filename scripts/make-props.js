@@ -1,7 +1,7 @@
 /**
  * make-props.js
  * wavファイルの長さを計算し、Remotion用のprops JSONを生成する。
- * 同時にwavを video/public/audio/ にコピーする。
+ * 同時にwavを remotion/public/audio/ にコピーする。
  *
  * 使い方:
  *   node scripts/make-props.js examples/sample.json output/audio/sample
@@ -28,9 +28,9 @@ if (!scriptPath || !audioDir) {
 const script = JSON.parse(fs.readFileSync(scriptPath, "utf-8"));
 validateScript(script);
 
-// video/public/audio/<audioDir名>/ にwavをコピー
+// remotion/public/audio/<audioDir名>/ にwavをコピー
 const audioDirName = path.basename(audioDir);
-const publicAudioDir = path.join(ROOT, "video", "public", "audio", audioDirName);
+const publicAudioDir = path.join(ROOT, "remotion", "public", "audio", audioDirName);
 fs.mkdirSync(publicAudioDir, { recursive: true });
 
 let globalFrame = 0;

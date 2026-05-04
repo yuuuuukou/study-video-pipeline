@@ -1,7 +1,7 @@
 {
-  "name": "video",
+  "name": "remotion-app",
   "version": "1.0.0",
-  "description": "My Remotion video",
+  "description": "Remotion renderer for study-video-pipeline",
   "repository": {},
   "license": "MIT",
   "private": true,

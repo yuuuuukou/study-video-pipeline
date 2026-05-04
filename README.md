@@ -41,12 +41,12 @@ $env:VOICEVOX_URL = "http://localhost:50021"
 
 ```powershell
 cd study-video-pipeline
-npm install --prefix video
+npm install --prefix remotion
 ```
 
 ## Speaker IDs
 
-`video/src/speaker-config.json` の `voicevoxId` は、あなたの環境で使うVOICEVOXの話者/スタイルIDに合わせてください。
+`remotion/src/speaker-config.json` の `voicevoxId` は、あなたの環境で使うVOICEVOXの話者/スタイルIDに合わせてください。
 
 ```powershell
 Invoke-RestMethod "http://localhost:50021/speakers"
@@ -75,17 +75,17 @@ output/videos/sample.mp4
 生成済みファイルが古い、音声と動画がずれる、または設定変更が反映されない場合は、生成物を削除してから再実行してください。
 
 ```powershell
-Remove-Item -Recurse -Force output, video/public/audio, examples/*.props.json -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force output, remotion/public/audio, examples/*.props.json -ErrorAction SilentlyContinue
 node scripts/render.js examples/sample.json
 ```
 
-`video/public/audio/` と `examples/*.props.json` はレンダリング時に再生成されます。
+`remotion/public/audio/` と `examples/*.props.json` はレンダリング時に再生成されます。
 
 ## Files
 
 ```text
 scripts/             Node.js pipeline scripts
-video/               Remotion project
+remotion/            Remotion project
 examples/sample.json Minimal script JSON
 output/              Generated files; ignored by git
 ```
@@ -118,7 +118,7 @@ library's terms, including required credit notation.
 
 ## Notes
 
-- `output/` and `video/public/audio/` are generated and ignored.
+- `output/` and `remotion/public/audio/` are generated and ignored.
 - `examples/*.props.json` is generated and ignored.
 - Studio startup may use dummy default props for preview/bootstrap purposes;
   render from a script JSON to generate actual props.

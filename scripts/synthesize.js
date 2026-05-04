@@ -15,7 +15,7 @@ import http from "http";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SPEAKER_CONFIG_PATH = path.join(__dirname, "..", "video", "src", "speaker-config.json");
+const SPEAKER_CONFIG_PATH = path.join(__dirname, "..", "remotion", "src", "speaker-config.json");
 
 // --- 設定（ここを変えるだけで話者が変わる）---
 const VOICEVOX_URL = process.env.VOICEVOX_URL ?? "http://localhost:50021";
@@ -45,7 +45,7 @@ for (const [sectionIndex, section] of script.sections.entries()) {
   for (const line of section.lines) {
     const speakerId = SPEAKERS[line.speaker];
     if (speakerId === undefined) {
-      throw new Error(`未知のspeakerです: ${line.speaker}. video/src/speaker-config.json を確認してください。`);
+      throw new Error(`未知のspeakerです: ${line.speaker}. remotion/src/speaker-config.json を確認してください。`);
     }
 
     const filename = `${String(lineIndex).padStart(4, "0")}_${line.speaker}.wav`;
@@ -175,7 +175,7 @@ function validateScript(script) {
         throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].display_text がありません。`);
       }
       if (SPEAKERS[line.speaker] === undefined) {
-        throw new Error(`未知のspeakerです: ${line.speaker}. video/src/speaker-config.json を確認してください。`);
+        throw new Error(`未知のspeakerです: ${line.speaker}. remotion/src/speaker-config.json を確認してください。`);
       }
     }
   }

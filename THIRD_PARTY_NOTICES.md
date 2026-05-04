@@ -41,7 +41,7 @@ using generated voices, follow the terms of each voice library.
 
 ## Voice Libraries Used By The Sample
 
-The default `video/src/speaker-config.json` uses these VOICEVOX speakers in the
+The default `remotion/src/speaker-config.json` uses these VOICEVOX speakers in the
 author's verification environment:
 
 - `No.7`
@@ -78,7 +78,7 @@ reusable materials, and do not claim them as your own work.
 Generated audio and video files are intentionally ignored by git:
 
 - `output/`
-- `video/public/audio/`
+- `remotion/public/audio/`
 - `examples/*.props.json`
 
 Those generated files are not covered by this repository's MIT License. If you

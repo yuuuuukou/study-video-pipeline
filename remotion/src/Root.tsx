@@ -30,7 +30,7 @@ const DEFAULT_PROPS: StudyVideoProps = {
       layout: "code",
       slide_points: [
         "git clone https://github.com/yuuuuukou/study-video-pipeline.git",
-        "npm install --prefix video",
+        "npm install --prefix remotion",
         "node scripts/render.js examples/sample.json",
       ],
       startFrame: 150,

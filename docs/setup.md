@@ -3,7 +3,7 @@
 ## 1. Install Remotion Dependencies
 
 ```powershell
-npm install --prefix video
+npm install --prefix remotion
 ```
 
 ## 2. Start VOICEVOX
@@ -20,7 +20,7 @@ Invoke-RestMethod "http://localhost:50021/version"
 Invoke-RestMethod "http://localhost:50021/speakers"
 ```
 
-Update `video/src/speaker-config.json` if your speaker/style IDs differ.
+Update `remotion/src/speaker-config.json` if your speaker/style IDs differ.
 
 ## 4. Render
 
@@ -33,6 +33,6 @@ Generated files:
 ```text
 output/audio/sample/*.wav
 examples/sample.props.json
-video/public/audio/sample/*.wav
+remotion/public/audio/sample/*.wav
 output/videos/sample.mp4
 ```
