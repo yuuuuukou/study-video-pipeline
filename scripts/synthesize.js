@@ -171,6 +171,9 @@ function validateScript(script) {
       if (!line.text) {
         throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].text がありません。`);
       }
+      if (!line.display_text) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].display_text がありません。`);
+      }
       if (SPEAKERS[line.speaker] === undefined) {
         throw new Error(`未知のspeakerです: ${line.speaker}. video/src/speaker-config.json を確認してください。`);
       }

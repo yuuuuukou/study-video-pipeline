@@ -14,10 +14,10 @@ content.
 
 This project uses Remotion as a third-party dependency.
 
-Remotion is licensed separately under the Remotion License. Individuals, small
-for-profit organizations, non-profit organizations, and evaluation use may be
-eligible for the Free License. Other commercial use may require a Company
-License.
+Remotion is licensed separately under the Remotion License. Individuals,
+for-profit organizations with 3 or fewer people, non-profit organizations, and
+non-commercial evaluation use may be eligible for the Free License. Other
+commercial use may require a Company License.
 
 - Remotion License: https://github.com/remotion-dev/remotion/blob/main/LICENSE.md
 - Remotion Company License: https://www.remotion.pro/license
