@@ -1,0 +1,12 @@
+{
+  "speaker1": {
+    "name": "No.7",
+    "color": "#8B1515",
+    "voicevoxId": 29
+  },
+  "speaker2": {
+    "name": "春日部つむぎ",
+    "color": "#C4A135",
+    "voicevoxId": 8
+  }
+}

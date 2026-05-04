@@ -1,0 +1,45 @@
+{
+  "title": "動画生成パイプラインの最小サンプル",
+  "sections": [
+    {
+      "section_title": "全体像",
+      "layout": "bullets",
+      "slide_points": [
+        "台本JSONを書く",
+        "VOICEVOXで音声を作る",
+        "Remotionで動画を書き出す"
+      ],
+      "lines": [
+        {
+          "speaker": "speaker2",
+          "text": "ドウガ セイセイ パイプラインッテ ナニ?",
+          "display_text": "動画生成パイプラインって何？"
+        },
+        {
+          "speaker": "speaker1",
+          "text": "ダイホン ジェイソン ト オンセイ ト レンダリングヲ ツナグ シクミダヨ。",
+          "display_text": "台本JSONと音声とレンダリングをつなぐ仕組みです。"
+        }
+      ]
+    },
+    {
+      "section_title": "使うもの",
+      "layout": "code",
+      "slide_points": [
+        "node scripts/render.js examples/sample.json"
+      ],
+      "lines": [
+        {
+          "speaker": "speaker2",
+          "text": "ナニヲ ジッコウスレバ イイノ?",
+          "display_text": "何を実行すればいいの？"
+        },
+        {
+          "speaker": "speaker1",
+          "text": "ボイスボックスヲ タチアゲテカラ レンダー コマンドヲ ジッコウシマス。",
+          "display_text": "VOICEVOXを起動してからrenderコマンドを実行します。"
+        }
+      ]
+    }
+  ]
+}

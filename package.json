@@ -1,0 +1,11 @@
+{
+  "name": "study-video-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render:sample": "node scripts/render.js examples/sample.json",
+    "synthesize": "node scripts/synthesize.js",
+    "make-props": "node scripts/make-props.js"
+  }
+}

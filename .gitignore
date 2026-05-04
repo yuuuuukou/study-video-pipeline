@@ -1,0 +1,12 @@
+# generated
+node_modules/
+video/node_modules/
+output/audio/
+output/videos/
+output/scripts/
+video/public/audio/
+video/public/clips/
+examples/*.props.json
+tmp/
+.DS_Store
+Thumbs.db
