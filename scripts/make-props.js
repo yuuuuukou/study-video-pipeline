@@ -58,9 +58,7 @@ const timedSections = script.sections.map((section) => {
 
     const timedLine = {
       speaker: line.speaker,
-      // display_text 優先・無ければ text にフォールバック（読み上げ用カタカナが
-      // そのまま字幕に出るのを最後の砦として防ぐより、空字幕を回避する優先）
-      display_text: line.display_text ?? line.text ?? "",
+      display_text: line.display_text,
       audioSrc: `audio/${audioDirName}/${filename}`,
       startFrame: globalFrame,
       durationInFrames,
@@ -157,6 +155,18 @@ function validateScript(script) {
   for (const [sectionIndex, section] of script.sections.entries()) {
     if (!Array.isArray(section.lines)) {
       throw new Error(`sections[${sectionIndex}].lines は配列にしてください。`);
+    }
+
+    for (const [lineIndex, line] of section.lines.entries()) {
+      if (!line.speaker) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].speaker がありません。`);
+      }
+      if (!line.text) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].text がありません。`);
+      }
+      if (!line.display_text) {
+        throw new Error(`sections[${sectionIndex}].lines[${lineIndex}].display_text がありません。`);
+      }
     }
   }
 }

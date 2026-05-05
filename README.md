@@ -44,6 +44,8 @@ cd study-video-pipeline
 npm install --prefix remotion
 ```
 
+詳しいセットアップ確認は [`docs/setup.md`](docs/setup.md) も参照してください。
+
 ## Speaker IDs
 
 `remotion/src/speaker-config.json` の `voicevoxId` は、あなたの環境で使うVOICEVOXの話者/スタイルIDに合わせてください。
@@ -87,7 +89,9 @@ node scripts/render.js examples/sample.json
 scripts/             Node.js pipeline scripts
 remotion/            Remotion project
 examples/sample.json Minimal script JSON
-output/              Generated files; ignored by git
+output/audio/        Generated WAV files; ignored by git
+remotion/public/audio/ WAV files copied for Remotion staticFile(); ignored by git
+output/videos/       Generated MP4 files; ignored by git
 ```
 
 ## License
