@@ -1,6 +1,7 @@
 {
   "name": "study-video-pipeline",
   "version": "0.1.0",
+  "description": "台本JSONからVOICEVOX音声とRemotion動画を生成する最小サンプル / Minimal sample for generating VOICEVOX audio and Remotion video from script JSON",
   "private": true,
   "license": "MIT",
   "type": "module",
