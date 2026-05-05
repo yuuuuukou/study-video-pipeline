@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/scripts/deny-git-push.sh",
+        "powershell": ".github/hooks/scripts/deny-git-push.ps1",
+        "timeoutSec": 5
+      }
+    ]
+  }
+}

@@ -167,13 +167,13 @@ export const StudyVideo: React.FC<StudyVideoProps> = ({ sections }) => {
             gap: S.slideSubtitleGap,
           }}
         >
-          <SlideBody section={currentSection} frame={frame} S={S} />
+          <SlideBody section={currentSection} S={S} />
           {currentLine && <SubtitleBody line={currentLine} frame={frame} S={S} />}
         </AbsoluteFill>
       ) : (
         <>
           {/* 背景スライド */}
-          <SlideLayer section={currentSection} frame={frame} S={S} isVertical={isVertical} />
+          <SlideLayer section={currentSection} S={S} isVertical={isVertical} />
           {/* 字幕 */}
           {currentLine && (
             <SubtitleLayer line={currentLine} frame={frame} rightInset={subtitleRight} S={S} />
@@ -195,13 +195,8 @@ export const StudyVideo: React.FC<StudyVideoProps> = ({ sections }) => {
 };
 
 // ---- スライド中身（タイトル + レイアウト別コンテンツ）。AbsoluteFill ラッパーは持たない ----
-const SlideBody: React.FC<{ section: TimedSection; frame: number; S: Sizes }> = ({ section, frame, S }) => {
-  const opacity = interpolate(
-    frame - section.startFrame,
-    [0, 15],
-    [0, 1],
-    { extrapolateRight: "clamp" }
-  );
+const SlideBody: React.FC<{ section: TimedSection; S: Sizes }> = ({ section, S }) => {
+  const opacity = 1;
 
   const layout = section.layout ?? "bullets";
 
@@ -233,7 +228,7 @@ const SlideBody: React.FC<{ section: TimedSection; frame: number; S: Sizes }> = 
 };
 
 // ---- スライドレイヤー（横長用 / AbsoluteFillで全画面背景として配置）----
-const SlideLayer: React.FC<{ section: TimedSection; frame: number; S: Sizes; isVertical: boolean }> = ({ section, frame, S, isVertical }) => {
+const SlideLayer: React.FC<{ section: TimedSection; S: Sizes; isVertical: boolean }> = ({ section, S, isVertical }) => {
   return (
     <AbsoluteFill
       style={{
@@ -245,7 +240,7 @@ const SlideLayer: React.FC<{ section: TimedSection; frame: number; S: Sizes; isV
         }),
       }}
     >
-      <SlideBody section={section} frame={frame} S={S} />
+      <SlideBody section={section} S={S} />
     </AbsoluteFill>
   );
 };
@@ -314,7 +309,15 @@ const CodeContent: React.FC<{ lines: string[]; S: Sizes }> = ({ lines, S }) => (
         >
           {i + 1}
         </span>
-        <span style={{ color: "#e6edf3", whiteSpace: "pre" }}>{line}</span>
+        <span
+          style={{
+            color: "#e6edf3",
+            whiteSpace: "pre-wrap",
+            overflowWrap: "anywhere",
+          }}
+        >
+          {line}
+        </span>
       </div>
     ))}
   </div>
@@ -401,6 +404,7 @@ const CompareContent: React.FC<{ points: string[]; labels: [string, string]; S: 
 // slide_points[1..] = キャプション行
 const ImageContent: React.FC<{ points: string[]; S: Sizes }> = ({ points, S }) => {
   const [imgSrc, ...captions] = points;
+  const visibleCaptions = S.subtitleAvoidsCharacter ? [] : captions;
   const resolvedSrc = imgSrc
     ? imgSrc.startsWith("https://")
       ? imgSrc
@@ -430,9 +434,9 @@ const ImageContent: React.FC<{ points: string[]; S: Sizes }> = ({ points, S }) =
           }}
         />
       )}
-      {captions.length > 0 && (
+      {visibleCaptions.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 10, alignSelf: "stretch" }}>
-          {captions.map((caption, i) => (
+          {visibleCaptions.map((caption, i) => (
             <div
               key={i}
               style={{
